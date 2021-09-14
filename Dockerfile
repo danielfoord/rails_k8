@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ruby:2.6
+FROM ruby:2.6.3
 
 RUN apt-get update -qq && apt-get install -y curl nodejs mariadb-server mariadb-client 
 WORKDIR /app
