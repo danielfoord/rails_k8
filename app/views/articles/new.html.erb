@@ -1,0 +1,25 @@
+<% content_for :title, "App - New Article" %>
+
+<h1>New Article</h1>
+
+<%= form_with model: @article do |form| %>
+  <div>
+    <div><%= form.label :title %></div>
+    <%= form.text_field :title %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <div><%= form.label :body %></div>
+    <%= form.text_area :body %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "Create Article", class: "button" %>
+  </div>
+<% end %>
