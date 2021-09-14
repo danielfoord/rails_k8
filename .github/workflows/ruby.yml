@@ -22,7 +22,8 @@ jobs:
         env:
           MYSQL_DATABASE: app_test
           MYSQL_ROOT_PASSWORD: secret
-        ports: ["3306:3306"]
+        ports: 
+          - 3306:3306
 
     runs-on: ubuntu-latest
     strategy:
@@ -55,5 +56,5 @@ jobs:
         DB_USER: root
         DB_NAME: app_test
         DB_PASSWORD: secret
-        DB_HOST: 127.0.0.1
+        DB_HOST: 0.0.0.0
 
