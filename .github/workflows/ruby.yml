@@ -20,9 +20,9 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          POSTGRES_USER: myapp
-          POSTGRES_DB: app_test
-          POSTGRES_PASSWORD: "secret"
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: app_development
+          MYSQL_PASSWORD: secret
         ports: ["3306:3306"]
 
     runs-on: ubuntu-latest
