@@ -16,6 +16,15 @@ on:
 jobs:
   test:
 
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          POSTGRES_USER: myapp
+          POSTGRES_DB: app_test
+          POSTGRES_PASSWORD: "secret"
+        ports: ["3306:3306"]
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,4 +41,5 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
-      run: bundle exec rake test
+      run: bundle exec rake
+
