@@ -20,7 +20,7 @@ jobs:
       mysql:
         image: mysql:8
         env:
-          MYSQL_DATABASE: app_development
+          MYSQL_DATABASE: app_test
           MYSQL_ROOT_PASSWORD: secret
         ports: ["3306:3306"]
 
@@ -39,7 +39,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-        
+
     - name: Setup Database
       run: bundle exec rake db:setup
       env:
@@ -51,6 +51,7 @@ jobs:
     - name: Run tests
       run: bundle exec rake
       env:
+        RAILS_ENV: test
         DB_USER: root
         DB_NAME: app_test
         DB_PASSWORD: secret
