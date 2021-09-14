@@ -1,0 +1,26 @@
+<%= form_with model: @article do |form| %>
+  <div class="mb-2">
+    <div>
+      <%= form.label :title, class: "label" %>
+    </div>
+    <%= form.text_field :title, class: "input #{@article.errors.full_messages_for(:title).any? ? "is-danger" : ""}" %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
+      <div class="help is-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-2">
+    <div>
+      <%= form.label :body, class: "label" %>
+    </div>
+    <%= form.text_area :body, class: "input #{@article.errors.full_messages_for(:body).any? ? "is-danger" : ""}" %>
+    <% @article.errors.full_messages_for(:body).each do |message| %>
+      <div class="help is-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit", class: "button is-link" %>
+    <%= link_to "Cancel", "/articles", class: "button is-link is-light"%>
+  </div>
+<% end %>

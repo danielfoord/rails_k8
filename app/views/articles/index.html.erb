@@ -1,11 +1,23 @@
 <% content_for :title, "App - Articles" %>
 
-<h1 class="title">Articles</h1>
-<%= link_to "New Article", new_article_path, class: "button" %>
+<div class="is-flex is-flex-direction-row is-justify-content-space-between">
+  <div class="is-flex">
+    <h1 class="title">Articles</h1>
+  </div>
+  <div class="is-flex">
+    <%= link_to "New Article", new_article_path, class: "button is-link mb-3" %>
+  </div>
+</div>
+
 <ul>
   <% @articles.each do |article| %>
-    <li>
-       <%= link_to article.title, article %>
-    </li>
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+       <div class="is-flex">
+          <%= link_to article.title, article %>
+       </div>
+        <div class="is-flex is-size-7">
+          Created <%= time_ago_in_words(article.created_at) %> ago
+       </div>
+    </div>
   <% end %>
 </ul>
