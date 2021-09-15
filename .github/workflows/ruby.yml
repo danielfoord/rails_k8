@@ -23,7 +23,8 @@ jobs:
           MYSQL_DATABASE: app_test
           MYSQL_ROOT_PASSWORD: secret
         ports: 
-          - 3306:3306
+          - "3306:3306"
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     runs-on: ubuntu-latest
     strategy:
@@ -41,13 +42,21 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client libmysqlclient-dev
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root -p secret -e "SHOW GRANTS FOR 'root'@'localhost'"
+        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root -p secret mysql
+        
     - name: Setup Database
       run: bundle exec rake db:setup
       env:
+        RAILS_ENV: test
         DB_USER: root
         DB_NAME: app_test
         DB_PASSWORD: secret
-        DB_HOST: localhost
+        DB_HOST: 0.0.0.0
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
     - name: Run tests
       run: bundle exec rake
@@ -57,4 +66,5 @@ jobs:
         DB_NAME: app_test
         DB_PASSWORD: secret
         DB_HOST: 0.0.0.0
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
