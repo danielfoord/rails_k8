@@ -1,4 +1,5 @@
 # README
+[![Ruby](https://github.com/danielfoord/rails_k8/actions/workflows/ruby.yml/badge.svg)](https://github.com/danielfoord/rails_k8/actions/workflows/ruby.yml)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
