@@ -3,7 +3,6 @@ FROM ruby:2.6.3
 
 RUN apt-get update -qq && apt-get install -y curl nodejs mariadb-server mariadb-client 
 WORKDIR /app
-ADD . /app/
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -11,6 +10,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y yarn
 RUN bundle install
 RUN rails webpacker:install
+ADD . /app/
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
