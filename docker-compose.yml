@@ -10,6 +10,7 @@ services:
       MYSQL_DATABASE: app_development
     ports:
       - "3306:3306"
+
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -26,5 +27,6 @@ services:
       DB_NAME: app_development
       DB_PASSWORD: secret
       DB_HOST: db
+
 volumes:
  db:
