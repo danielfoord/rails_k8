@@ -15,7 +15,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.save
-      redirect_to articles_path
+      redirect_to root_path
     else
       prepend_view_path "articles/new"
       render :action => :new, :path => "articles/new"
@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
 
     if @article.update(article_params)
-      redirect_to articles_path
+      redirect_to root_path
     else
       render :edit
     end
