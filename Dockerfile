@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y yarn
 RUN yarn cache clean
 RUN yarn --verbose
 RUN bundle install
-RUN bundle exec rails webpacker:compile
+RUN rake webpacker:compile
 
 # Copy app contents
 ADD . /app/
