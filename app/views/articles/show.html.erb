@@ -5,8 +5,8 @@
     <h1 class="title"><%= @article.title %></h1>
   </div>
   <div class="is-flex">
-    <%= link_to "Edit", edit_article_path, class: "button is-link mb-3 mr-3" %>
-     <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-link mb-3" %>
+    <%= link_to "Edit", edit_article_path, class: "button is-link is-light mb-3 mr-1" %>
+     <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }, class: "button is-danger is-light mb-3" %>
   </div>
 </div>
 
