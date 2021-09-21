@@ -20,16 +20,16 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y yarn
 
 # Copy app contents
-ADD . /app/
+COPY . /app/
 
 # Install dependencies
 RUN yarn cache clean
 RUN yarn
 RUN bundle install
-RUN rake webpacker:compile
+RUN ./bin/rails webpacker:compile
 
 # Copy app contents
-ADD . /app/
+COPY . /app/
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
