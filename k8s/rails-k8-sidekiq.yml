@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-k8-sidekiq
+  labels:
+    app: rails-k8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails-k8
+  template:
+    metadata:
+      labels:
+        app: rails-k8
+    spec:
+      containers:
+      - name: rails-k8-sidekiq
+        image: danielfoord/rails_k8:0.0.13
+        command:
+          - "bundle exec sidekiq"
+        resources:
+          limits:
+            cpu: "50m"
+            memory: "256Mi"
+        # startupProbe:
+        #   httpGet:
+        #     path: /status
+        #     port: 3000
+        #   initialDelaySeconds: 20
+        #   periodSeconds: 10
+        #   failureThreshold: 30
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: database_uri
+        - name: DB_USER
+          value: root
+        - name: DB_NAME
+          value: app_development
+        - name: RAILS_ENV
+          value: development
+        - name: REDIS_URL_SIDEKIQ
+          value: redis://rails-k8-redis:6379/1
+---
