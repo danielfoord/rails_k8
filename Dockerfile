@@ -3,9 +3,9 @@ FROM ruby:2.6.3
 
 # Install NodeJS
 RUN apt-get update
-RUN apt-get -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+RUN apt-get install -y --no-install-recommends curl dirmngr apt-transport-https lsb-release ca-certificates
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update -qq && apt-get install -y nodejs mariadb-server mariadb-client 
+RUN apt-get update -qq && apt-get install -y --no-install-recommends nodejs mariadb-server mariadb-client 
 
 # Copy dependency definitions
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY yarn.lock /app/yarn.lock
 # Install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn
+RUN apt-get update && apt-get install -y --no-install-recommends yarn
 
 # Copy app contents
 COPY . /app/
