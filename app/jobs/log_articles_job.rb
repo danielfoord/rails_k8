@@ -1,7 +1,7 @@
 class LogArticlesJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform()
     pp Article.all
   end
 end

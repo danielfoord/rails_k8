@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  database_uri: mysql-service
+  sidekiq_redis_uri: redis://rails-k8-redis:6379/1
+  rails_env: development
+  db_user: root
+  db_name: app_development
+---
+
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: mysql-secret
+type: Opaque
+data:
+  mysql-root-password: c2VjcmV0
+  sidekiq_user: c2lkZWtpcV9hZG1pbg==
+  sidekiq_password: c2lkZWtpcV9wYXNzd29yZA==
+---

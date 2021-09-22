@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-k8-deployment
+  labels:
+    app: rails-k8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails-k8
+  template:
+    metadata:
+      labels:
+        app: rails-k8
+    spec:
+      containers:
+      - name: rails-k8
+        image: danielfoord/rails_k8:0.0.15
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                [
+                  "/bin/bash",
+                  "-l",
+                  "-c",
+                  "cd /opt/myapp/current; for f in tmp/pids/sidekiq*.pid; do bundle exec sidekiqctl stop $f; done",
+                ]
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "256Mi"
+        startupProbe:
+          httpGet:
+            path: /status
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 30
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: database_uri
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: db_user
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: db_name
+        - name: RAILS_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: rails_env
+        - name: REDIS_URL_SIDEKIQ
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: sidekiq_redis_uri
+        - name: SIDEKIQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: sidekiq_user
+        - name: SIDEKIQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: sidekiq_password
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rails-k8-service
+spec:
+  selector:
+    app: rails-k8
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rails-k8-ingress
+spec:
+  # tls:
+  # - hosts:
+  #   - dashboard.com
+  #   secretName: dashboard-secret-tls
+  rules:
+  - host: rails-k8.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rails-k8-service
+            port:
+              number: 3000
