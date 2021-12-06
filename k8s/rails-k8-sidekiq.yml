@@ -16,9 +16,11 @@ spec:
     spec:
       containers:
       - name: rails-k8-sidekiq
-        image: danielfoord/rails_k8:0.0.13
-        command:
-          - "bundle exec sidekiq"
+        image: danielfoord/rails_k8:0.0.15
+        command: ["bundle"]
+        args:
+          - "exec"
+          - "sidekiq"
         resources:
           limits:
             cpu: "50m"
