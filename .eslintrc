@@ -5,7 +5,6 @@
   "rules": {
     // Override our default settings just for this directory
     "eqeqeq": "warn",
-    "strict": "off",
-    "quotes": ["single"]
+    "strict": "off"
   }
 }
