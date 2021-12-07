@@ -13,5 +13,35 @@
  *= require_tree .
  *= require_self
  */
+ @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 
-@import "../../../vendor/bulma/bulma.sass"
+@import "../../../vendor/bulma/bulma.sass";
+
+// 1. Import the initial variables
+@import "../../../vendor/bulma/sass/utilities/_all.sass";
+
+// $family-sans-serif: 'Open Sans', sans-serif;
+// $family-primary: 'Open Sans', sans-serif;
+// $body-family: 'Open Sans', sans-serif;
+
+$background: $black-ter;
+$body-background-color: $black-ter;
+$text: $white;
+$text-strong: $white;
+$dark: $white;
+$body-color: $white;
+$title-color: $white;
+
+$link: hsl(249, 100%, 78%);
+$link-hover: hsl(253, 100%, 85%);
+
+$input-background-color: $grey-darker;
+$input-color: $white;
+$input-border-color: $grey-darker;
+$input-hover-border-color: $grey;
+$label-color: $white;
+
+// 6. Import the rest of Bulma
+@import "../../../vendor/bulma/bulma.sass";
+
+

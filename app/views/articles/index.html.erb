@@ -5,7 +5,7 @@
     <h1 class="title">Articles</h1>
   </div>
   <div class="is-flex">
-    <%= link_to "New Article", new_article_path, class: "button is-link mb-3" %>
+    <%= link_to "New Article", new_article_path, class: "button is-primary mb-3" %>
   </div>
 </div>
 
@@ -13,7 +13,7 @@
   <% @articles.each do |article| %>
     <div class="is-flex is-flex-direction-row is-justify-content-space-between">
        <div class="is-flex">
-          <%= link_to article.title, article %>
+          <%= link_to article.title, article, class: "is-link is-light" %>
        </div>
         <div class="is-flex is-size-7">
           Created <%= time_ago_in_words(article.created_at) %> ago

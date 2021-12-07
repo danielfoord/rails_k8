@@ -23,6 +23,7 @@ services:
     depends_on:
       - db
       - redis
+      - web
     links:
       - db
       - redis

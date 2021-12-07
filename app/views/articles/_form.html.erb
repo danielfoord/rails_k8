@@ -9,7 +9,7 @@
     <% end %>
   </div>
 
-  <div class="mb-2">
+  <div class="mb-3">
     <div>
       <%= form.label :body, class: "label" %>
     </div>
@@ -20,7 +20,7 @@
   </div>
 
   <div>
-    <%= form.submit "Submit", class: "button is-link" %>
-    <%= link_to "Cancel", "/articles", class: "button is-link is-light"%>
+    <%= form.submit "Submit", class: "button is-primary mr-2" %>
+    <%= link_to "Cancel", "/articles", class: "button"%>
   </div>
 <% end %>
